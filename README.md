@@ -1,0 +1,1 @@
+# Flask-UI-for-Classification-of-Anomalies-in-Gastrointestinal-Tract-through-Endoscopic-Imagery
