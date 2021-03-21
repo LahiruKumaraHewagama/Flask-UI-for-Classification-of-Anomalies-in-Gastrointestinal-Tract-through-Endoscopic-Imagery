@@ -1,0 +1,156 @@
+<html>
+
+   <head>
+
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!-- CSS only -->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  
+      <!-- JS, Popper.js, and jQuery -->
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+      <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      </head>
+   <body>
+
+      <div class="container">  
+        
+         <br/>
+         <h2 style="color:black; text-align: center;">Classification of Anomalies  in Gastrointestinal Tract through Endoscopic Imagery  Using Convolutional Neural Network (CNN)</h2>
+<br/><br/><br/>
+         <div class="row">
+            <div class="col-1"></div>
+            <div class="col-10"> 
+               <div class="row">
+                  <div class="col-5">
+                     <br/> 
+                   
+                    
+               
+
+             {% if (result[0]=='zero') %}
+             <img id="blah"  style=" border: 2px solid black" width="300" height="250" />    
+             <br/> <br/>
+             <input type="file"  id="identifierId1"  onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
+             <br/> <br/>  <label style="font-size: 15px;">Anomalies Path  : </label>
+             <div class="form-input" >
+               
+                <input type="text" class="form-control" id="c"   onchange="load()" placeholder="Enter Anomalies Path">
+              </div>
+<br/>
+              
+              <form action = "http://localhost:5000/Predict" method = "POST">
+                 
+                     
+               <input type="hidden" id="url"  name="nm1" value="">
+       
+            
+
+               <input type = "submit"  value = "Predict" />
+
+
+            </form>
+               
+             {% else %}
+            
+             <br/><br/>
+             <br/><br/>
+             {% if (result[0]==result[1]) %}
+            
+             <div style=" width: 320px;
+             padding: 30px;
+             border: 5px solid rgb(0, 216, 0);
+             margin: 10; align-items: center;" >
+               <h1 style="font-size: 20px; color: rgb(0, 216, 0); border: 4; margin-left: 45;">Correct Prediction!</h1>
+             </div>
+            
+             {% else %}    
+             <div style=" width: 320px;
+             padding: 30px;
+             border: 3px solid rgb(228, 19, 0);
+             margin: 0;" >   
+             <h1 style="font-size: 20px; color: rgb(228, 19, 0); border: 4 ;margin-left: 45;">Wrong Prediction!</h1>    </div>       
+             {% endif %}
+             <br/> 
+             <div class="container" style="margin-left: 84;">
+               <form action = "http://localhost:5000/" method = "POST">
+                  <input  type = "submit" value = "New Prediction" /></form>
+             </div>
+     
+             {% endif %}
+          
+         
+               
+             
+            
+               <br/> <br/>
+                 
+             </div>
+               <div class="col-1">
+                  <div class="vl" style="border-left: 6px solid rgb(21, 22, 21); height: 500px;"></div>
+
+               </div>
+               <div class="col-6">
+                  <br/> <br/>
+              
+
+                  {% if (result[0]!='zero') %}
+                  <br/><br/>
+                  <label style="font-size: 25px; color: rgb(15, 13, 13)">Correct Anomalies Lable : </label> <p style="font-size: 18px;" id="Correct"></p>
+                  <br/>
+                  <label style="font-size: 25px; color: rgb(15, 13, 13)">Predicting Anomalies Lable : </label> <p style="font-size: 18px; "id="Predicting"></p>
+                  
+                  <br/>
+                  {% else %} 
+
+                  <p style="font-size: 18px; align-items: center;color: rgb(15, 13, 13)" >In this model our goal is classification of the GI tract image according to the given labeled class set.
+                     We have used a supervised CNN model with KVASIR data set to build our deep learning model.
+                     There we use three Conv2D layers for creating our model to get good accuracy.
+                     </p>
+                     <h6 style="color: rgb(230, 0, 0)" >MODEL ACCURACY - 93.34%</h6>
+                  {% endif %}
+               
+               
+             
+               </div></div>
+               
+            </div>
+            <div class="col-1"></div>
+         </div>  
+  
+      </div>
+
+      <script>
+      function load(){
+         console.log('{{result}}'.length)
+         if('{{result}}'.length==16){
+         var ImgName=document.getElementById("identifierId1").files[0].name;
+         var url = document.getElementById("c").value;
+         var url = url+'\\'+ImgName;         
+         document.getElementById("url").value = url;
+         console.log("url")
+         
+       
+         }
+
+}
+
+      if('{{result}}'.length!=16){
+
+         document.getElementById("Correct").innerHTML = '{{result[0]}}';
+         document.getElementById("Predicting").innerHTML = '{{result[1]}}';
+       
+
+
+         }
+         
+
+            
+                              
+         </script>
+
+   </body>
+</html>
